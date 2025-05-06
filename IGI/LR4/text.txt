@@ -1,0 +1,10 @@
+Hello world! This is a test123 text with various elements. 
+Does it contain what we need? Yes it does! Let's check:
+1. IP addresses like 192.168.1.1 (valid) and 300.10.10.10 (invalid).
+2. Short words: a, an, the, cat, dog.
+3. Words ending with w: show, flow, window, pillow.
+4. Mixed-case words: Apple, banana, Cherry.
+5. Smileys: :) ;-) :(( ;)) :[ 
+6. Numbers with letters: test123, 456abc, xyz789.
+7. Various sentence types! Questions? Statements. 
+8. The quick brown fox jumps over the lazy dog.
