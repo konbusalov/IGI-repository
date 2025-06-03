@@ -1,0 +1,78 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<h2>Product Categories</h2>
+
+<!-- Category Filter -->
+<div>
+    <h3>Filter Products</h3>
+    <form method="get">
+        <p>
+            <label>Search:</label>
+            <input type="text" name="search" value="{{ search_query|default:'' }}" placeholder="Product name or article">
+        </p>
+
+        <p>
+            <label>Category:</label>
+            <select name="category">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %}>
+                    {{ category.name }}         
+                </option>
+                {% endfor %}
+            </select>
+        </p>
+        
+        <p>
+            <label>Min Price:</label>
+            <input type="number" name="min_price" value="{{ min_price|default:'' }}" step="0.01">
+        </p>
+        
+        <p>
+            <label>Max Price:</label>
+            <input type="number" name="max_price" value="{{ max_price|default:'' }}" step="0.01">
+        </p>
+
+        <p>
+            <label>Sort By:</label>
+            <select name="sort">
+                <option value="">Default</option>
+                <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
+                <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
+            </select>
+        </p>
+        
+        <button type="submit">Apply Filters</button>
+        <a href="?">Clear Filters</a>
+    </form>
+</div>
+
+
+
+<!-- Products List -->
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>In Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+            </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No products found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

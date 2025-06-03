@@ -1,0 +1,33 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>Promo Codes</h1>
+    
+    <h2>Active Promotions</h2>
+    {% if active_promos %}
+        <ul>
+        {% for promo in active_promos %}
+            <li>
+                <strong>{{ promo.code }}</strong> - {{ promo.discount }}% off
+                (Valid until {{ promo.valid_until|date:"Y-m-d" }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No active promotions at this time.</p>
+    {% endif %}
+
+    <h2>Archive</h2>
+    {% if archived_promos %}
+        <ul>
+        {% for promo in archived_promos %}
+            <li>
+                <strong>{{ promo.code }}</strong> - {{ promo.discount }}% off
+                ({{ promo.status }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No archived promotions.</p>
+    {% endif %}
+{% endblock %}

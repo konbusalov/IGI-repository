@@ -1,0 +1,75 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <h2>Account Information</h2>
+        <div>
+            <label for="{{ user_form.username.id_for_label }}">Username:</label>
+            {{ user_form.username }}
+            {% if user_form.username.errors %}
+                <span style="color: red">{{ user_form.username.errors }}</span>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="{{ user_form.first_name.id_for_label }}">First Name:</label>
+            {{ user_form.first_name }}
+            {% if user_form.first_name.errors %}
+                <span style="color: red">{{ user_form.first_name.errors }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="{{ user_form.last_name.id_for_label }}">Last Name:</label>
+            {{ user_form.last_name }}
+            {% if user_form.last_name.errors %}
+                <span style="color: red">{{ user_form.last_name.errors }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="{{ user_form.password.id_for_label }}">Password:</label>
+            {{ user_form.password }}
+            {% if user_form.password.errors %}
+                <span style="color: red">{{ user_form.password.errors }}</span>
+            {% endif %}
+        </div>
+
+        
+        <h2>Personal Information</h2>
+        <div>
+            <label for="{{ employee_form.position.id_for_label }}">Position:</label>
+            {{ employee_form.position }}
+            {% if employee_form.position.errors %}
+                <span style="color: red">{{ employee_form.phone.errors }}</span>
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ employee_form.phone.id_for_label }}">Phone:</label>
+            {{ employee_form.phone }}
+            {% if employee_form.phone.errors %}
+                <span style="color: red">{{ employee_form.phone.errors }}</span>
+            {% endif %}
+        </div> 
+        <div>
+            <label for="{{ employee_form.age.id_for_label }}">Age:</label>
+            {{ employee_form.age }}
+            {% if employee_form.age.errors %}
+                <span style="color: red">{{ employee_form.age.errors }}</span>
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ employee_form.photo.id_for_label }}">Photo:</label>
+            {{ employee_form.photo }}
+            {% if employee_form.photo.errors %}
+                <span style="color: red">{{ employee_form.phone.errors }}</span>
+            {% endif %}
+        </div>
+        
+        <button type="submit">Register</button>
+    </form>
+{% endblock %}

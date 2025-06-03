@@ -1,0 +1,28 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<h2>Add Supplier</h2>
+
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% for field in form %}
+        <p>
+            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+            {{ field }}
+            {% if field.errors %}
+                <span style="color: red;">{{ field.errors }}</span>
+            {% endif %}
+        </p>
+    {% endfor %}
+    
+    {% if form.non_field_errors %}
+        <div style="color: red;">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+    
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

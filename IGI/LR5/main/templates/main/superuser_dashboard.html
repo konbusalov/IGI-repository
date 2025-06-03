@@ -1,0 +1,137 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+    
+    <h2>Products Management</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Suppliers</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.article }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>${{ product.price }}</td>
+                    <td>
+                        <ul>
+                            {% for supplier in product.suppliers.all %}
+                                <li>{{ supplier.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>[{{ product.quantity }}]</td>
+                    <td>
+                        <button>
+                            <a href="edit_product/{{product.id}}" class="btn edit-btn">
+                                Edit
+                            </a>
+                        </button>
+                        <button>
+                            <a href="delete_product/{{product.id}}" class="btn delete-btn">
+                                Delete
+                            </a>
+                        </button>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">No products available</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button>
+        <a href="add_product/" class="btn delete-btn">
+            Add Product
+        </a>
+    </button>
+
+    <h2>Suppliers Management</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Supplied Parts</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for supplier in suppliers %}
+                <tr>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.address }}</td>
+                    <td>{{ supplier.phone }}</td>
+                    <td>
+                        <ul>
+                            {% for product in supplier.products.all %}
+                                <li>{{ product.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <button>
+                            <a href="edit_supplier/{{supplier.id}}" class="btn edit-btn">
+                                Edit
+                            </a>
+                        </button>
+                        <button>
+                            <a href="delete_supplier/{{supplier.id}}" class="btn delete-btn">
+                                Delete
+                            </a>
+                        </button>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No suppliers available</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button>
+        <a href="add_supplier/" class="btn delete-btn">
+            Add Supplier
+        </a>
+    </button>
+
+    <h2>Sales Overview</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+                <th>Customer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.date|date:"Y-m-d" }}</td>
+                    <td>{{ sale.product.name }}</td>
+                    <td>{{ sale.quantity }}</td>
+                    <td>${{ sale.product.price }}</td>
+                    <td>${{ sale.total_price}}</td>
+                    <td>{{ sale.customer.user.username }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">No sales recorded</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

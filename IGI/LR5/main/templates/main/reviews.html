@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<h2>Customer Reviews</h2>
+
+<!-- Reviews List -->
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Review Text</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in reviews %}
+        <tr>
+            <td>{{ review.author }}</td>
+            <td>{{ review.rating }}/5</td>
+            <td>{{ review.text }}</td>
+            <td>{{ review.created_at|date:"Y-m-d" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No reviews yet</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Add Review Button -->
+{% if user.is_authenticated %}
+    <button onclick="document.getElementById('review-form').style.display='block'">
+        Add Review
+    </button>
+    
+    <!-- Review Form (hidden by default) -->
+    <div id="review-form" style="display:none;">
+        <h3>Write Your Review</h3>
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <label>Rating:</label>
+                <select name="rating" required>
+                    <option value="">Select rating</option>
+                    <option value="1">1 Star</option>
+                    <option value="2">2 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="5">5 Stars</option>
+                </select>
+            </p>
+            <p>
+                <label>Review:</label><br>
+                <textarea name="text" rows="4" cols="50" required></textarea>
+            </p>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+{% else %}
+    <p>
+        <a href="{% url 'login' %}">Log in</a> to leave a review
+    </p>
+{% endif %}
+{% endblock %}

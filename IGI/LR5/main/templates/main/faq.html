@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>Frequently Asked Questions</h1>
+    
+    {% if faqs %}
+        {% for faq in faqs %}
+            <details>
+                <summary><strong>{{ faq.question }}</strong> (added: {{ faq.date_added|date:"Y-m-d" }})</summary>
+                <p>{{ faq.answer }}</p>
+            </details>
+        {% endfor %}
+    {% else %}
+        <p>No questions available yet.</p>
+    {% endif %}
+{% endblock %}

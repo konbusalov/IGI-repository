@@ -1,0 +1,44 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>Customer Dashboard</h1>
+    
+    <h2>Available Products</h2>
+    <ul>
+        {% for product in products %}
+            <li>
+                {{ product.name }} - ${{ product.price }} [{{product.quantity}}]
+                {%if product.quantity != 0 %}
+                    <form method="post" action="purchase_product/{{product.id}}">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" min="1" value="1" style="width: 50px;">
+                        <button type="submit">Buy</button>
+                    </form>
+                {%endif%}
+            </li>
+        {% empty %}
+            <li>No products available</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Your Recent Purchases</h2>
+    <ul>
+        {% for purchase in purchases %}
+            <li>
+                {{ purchase.product.name }} - {{ purchase.quantity }} pcs
+                ({{ purchase.date|date:"Y-m-d" }})
+            </li>
+        {% empty %}
+            <li>No purchases yet</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Active Promo Codes</h2>
+    <ul>
+        {% for promo in promos %}
+            <li>{{ promo.code }} - {{ promo.discount }}% off</li>
+        {% empty %}
+            <li>No active promo codes</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

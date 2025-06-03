@@ -1,0 +1,75 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<h1>Website Statistics</h1>
+
+<h2>Alphabetical Lists</h2>
+<h3>Customers (A-Z)</h3>
+<ul>
+    {% for customer in customers%}
+    <li>{{ customer.user.last_name }} {{customer.user.first_name}} - {{ customer.phone }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Products (A-Z)</h3>
+<ul>
+    {% for product in products %}
+    <li>{{ product.name }} - ${{ product.price }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Sale Total: ${{ sale_total }}</h3>
+
+<h2>Sale Statistics</h2>
+<div style="display: flex; height: 300px; align-items: flex-end; border-left: 1px solid #000; border-bottom: 1px solid #000; padding-left: 20px; gap: 40px;">
+    <!-- Y-axis labels -->
+    <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; margin-right: 10px;">
+        {% for tick in y_ticks %}
+            <div>${{ tick|floatformat:2 }}</div>
+        {% endfor %}
+    </div>
+    
+  <div style="flex-grow: 1; height: 100%; position: relative; width: 240px;">
+        <!-- Columns container (aligned to bottom) -->
+        <div style="display: flex; height: 100%; align-items: flex-end; gap: 40px; position: absolute; bottom: 0; left: 0; right: 0;">
+            <!-- Average Column -->
+            <div style="width: 30px; background: #4bc0c0; height: {{avg_height}}%;"></div>
+            
+            <!-- Median Column -->
+            <div style="width: 30px; background: #36a2eb; height: {{median_height}}%;"></div>
+            
+            <!-- Mode Column -->
+            <div style="width: 30px; background: #ff6384; height: {{mode_height}}%;"></div>
+        </div>
+        
+        <!-- Labels container (below axis) -->
+        <div style="display: flex; justify-content: space-around; position: absolute; bottom: -60px; left: 0; right: 0; width: 180px;">
+            <div style="text-align: center; width: 30px;">
+                <div>Avg</div>
+                <div>${{ sale_stats.avg|floatformat:2 }}</div>
+            </div>
+            <div style="text-align: center; width: 30px;">
+                <div>Median</div>
+                <div>${{ sale_stats.median|floatformat:2 }}</div>
+            </div>
+            <div style="text-align: center; width: 30px;">
+                <div>Mode</div>
+                <div>${{ sale_stats.mode|floatformat:2 }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>.</h2> 
+<h2>Customer Age Statistics</h2>
+<p>Average customer age: {{ age_stats.avg }} years</p>
+<p>Median customer age: {{ age_stats.median }} years</p>
+
+<h2>Product Popularity</h2>
+<p>Most popular category: {{ popular_category.name }} ({{ popular_category.count }} sales)</p>
+
+<h2>Most Profitable</h2>
+<p>Most profitable category: {{ profitable_category.name }} (${{ profitable_category.profit }})</p>
+
+{% endblock %}
+

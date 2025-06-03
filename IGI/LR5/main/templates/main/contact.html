@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>Our Team</h1>
+    
+    {% if employees %}
+        {% for employee in employees %}
+            <div>
+                {% if employee.photo %}
+                    <img src="{{ employee.photo.url }}" alt="{{ employee.name }}" width="150">
+                {% endif %}
+                <h2>{{ employee.user.first_name }} {{employee.user.last_name}}</h2>
+                <p><strong>Position:</strong> {{ employee.position }}</p>
+                <p><strong>Phone:</strong> {{ employee.phone }}</p>
+                <p><strong>Responsibilities:</strong> {{ employee.responsibilities }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No employee information available.</p>
+    {% endif %}
+{% endblock %}

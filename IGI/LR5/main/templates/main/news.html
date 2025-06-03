@@ -1,0 +1,21 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>Latest News</h1>
+    
+    {% if articles %}
+        {% for article in articles %}
+            <article>
+                <h2>{{ article.title }}</h2>
+                {% if article.image %}
+                    <img src="{{ article.image.url }}" alt="{{ article.title }}" width="300">
+                {% endif %}
+                <p>{{ article.summary }}</p>
+                <small>Published: {{ article.pub_date|date:"Y-m-d" }}</small>
+            </article>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No articles available yet.</p>
+    {% endif %}
+{% endblock %}

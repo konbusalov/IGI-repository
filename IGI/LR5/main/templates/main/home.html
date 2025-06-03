@@ -1,0 +1,88 @@
+{% extends "main/base.html" %}
+
+{% block header %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>
+            <nav>
+                {% if not user.is_authenticated %}
+                    <a href="/login/">Login</a>
+                    <a href="/register_as_customer/">Register as customer</a>
+                    <a href="/register_as_employee/">Register as employee</a>
+                {% else %}
+                    <a href="/logout/">Logout</a>
+                    <a href="/dashboard/">Dashboard</a>
+                    {%if user.is_superuser%}
+                        <a href="/stats/">Stats</a>
+                    {%endif%}
+                {% endif %}
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About</a></li>
+                    <li><a href="/news/">News</a></li>
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                    <li><a href="/privacy_policy/">Privacy Policy</a></li>
+                    <li><a href="/jobs/">Jobs</a></li>
+                    <li><a href="/reviews/">Reviews</a></li>
+                    <li><a href="/promotions/">Promotions</a></li>
+                    <li><a href="/products/">Products</a></li>
+            <li><a href="/admin/">Admin</a></li>
+                </ul>
+            </nav>
+        </td>
+        <td align="right" valign="top">
+            <div>
+                <p>
+                    Timezone: {{ timezone }} | 
+                    Current Date: {{current_time.day}}/{{current_time.month}}/{{current_time.year}} | 
+                    Current UTC Date: {% now "d/m/Y" as utc_date %}{{ utc_date }}
+                </p>
+                <pre>
+{% now "F Y" %}
+Su Mo Tu We Th Fr Sa
+{% for week in calendar %}
+{% for day in week %}{% if day == 0 %}   {% else %}{% if day == current_day %}*{% else %} {% endif %}{{ day|stringformat:"2d" }}{% endif %} {% endfor %}
+{% endfor %}
+                </pre>
+            </div>
+        </td>
+    </tr>
+</table>
+{% endblock header %}       
+
+{% block content %}
+    <h1>Latest News</h1>
+    
+    {% if latest_article %}
+        <h2>{{ latest_article.title }}</h2>
+        <p>{{ latest_article.summary }}</p>
+        <p>Published on: {{ latest_article.pub_date|date:"Y-m-d" }}</p>
+    {% else %}
+        <p>No articles available.</p>
+    {% endif %}
+
+<div>
+    <!-- Cat Fact Section -->
+    <div>
+        <h2>Random Cat Fact</h2>
+        {% if cat_fact %}
+            <p>{{ cat_fact }}</p>
+        {% else %}
+            <p>Could not fetch cat fact at this time.</p>
+        {% endif %}
+    </div>
+
+    <!-- Activity Section -->
+    <div>
+        <h2>Random Joke</h2>
+        {% if joke_setup %}
+            <p><strong>Type:</strong> {{ joke_type|title }}</p>
+            <p><strong>-</strong> {{ joke_setup }}</p>
+            <p><strong>-</strong> {{ joke_punchline }}</p>
+        {% else %}
+            <p>Could not fetch activity suggestion at this time.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

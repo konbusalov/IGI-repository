@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    {% if 'product' in request.path %}
+        <h2>Edit Product</h2>
+    {% elif 'supplier' in request.path %}
+        <h2>Edit Supplier</h2>
+    {% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% for field in form %}
+        <p>
+            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+            {{ field }}
+            {% if field.errors %}
+                <span style="color: red;">{{ field.errors }}</span>
+            {% endif %}
+        </p>
+    {% endfor %}
+    
+    {% if form.non_field_errors %}
+        <div style="color: red;">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+    
+    <button type="submit">Save</button>
+</form>
+{% endblock %}
